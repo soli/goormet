@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <!-- Copyright 2010, Sylvain.Soliman@gmail.com
+   Licensed under the BSD license
+   http://www.opensource.org/licenses/bsd-license.php -->
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   </head>
+   <body onload="myLoad();">
+      <div id="myDiv">
+      </div>
+      <script type="text/javascript">
+         function myLoad() {
+            chrome.contextMenus.create(
+               {
+                  'title': 'Insert SpamGourmet address',
+                  'contexts': ['editable'],
+                  'onclick': doSG
+               }
+            );
+         };
+         function doSG(info, tab) {
+            var user = localStorage['user'];
+            if (user == undefined || user == '') {
+               chrome.tabs.create({'url': 'options.html'});
+               return;
+            }
+            var domain = localStorage['domain'];
+            if (domain == undefined) {
+               domain = 'spamgourmet.com';
+            }
+            var prefix = localStorage['prefix'];
+            if (prefix == undefined || prefix == '') {
+               prefix = '';
+            } else {
+               prefix += '.';
+            }
+            var num = localStorage['num'];
+            if (num == undefined || num == '0') {
+               num = '';
+            } else {
+               num += '.';
+            }
+            var word;
+            if (localStorage['word'] !== 'false') {
+               word = info.pageUrl.split('/', 3)[2];
+            } else {
+               var w = new Array(8);
+               var a = "a".charCodeAt(0);
+               for (var i=0; i<8; ++i) {
+                  w[i] = String.fromCharCode(Math.floor(Math.random()*26) +
+                        a);
+               }
+               word = w.join('');
+            }
+            var email = prefix + word +
+               "." + num + user + '@' + domain;
+            if (localStorage['copy'] !== 'false') {
+               myDiv.innerHTML = email;
+               var range = document.createRange();
+               range.selectNodeContents(document.getElementById('myDiv'));
+               var selection = window.getSelection();
+               selection.removeAllRanges();
+               selection.addRange(range);
+               document.execCommand('Copy', false, '');
+            }
+            chrome.tabs.executeScript(
+               null,
+               {
+                  'allFrames': true,
+                  'code': "document.execCommand('insertHTML', false, '" +
+                     email + "');"
+               }
+            );
+         };
+      </script>
+   </body>
+</html>
+

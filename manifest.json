@@ -1,0 +1,21 @@
+{
+   "__comment": "Copyright 2010, Sylvain.Soliman@gmail.com, Licensed under the GPLv2 license http://www.gnu.org/licenses/gpl-2.0.html",
+   "name": "Spam Goormet",
+   "version": "1.0.0",
+   "description": "Google Chrome/Chromium extension to ease the use of spamgourmet.com",
+   "icons": {
+      "16": "goormet16.png",
+      "48": "goormet48.png",
+      "128": "goormet128.png"
+   },
+   "update_url":
+      "http://cdn.bitbucket.org/soliman/goormet/downloads/updates.xml",
+   "background_page": "background.html",
+   "permissions": [
+      "contextMenus",
+      "tabs",
+      "http://*/*",
+      "https://*/*"
+   ],
+   "options_page": "options.html"
+}

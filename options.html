@@ -1,0 +1,108 @@
+<html>
+<head><title>Spam Goormet Options</title></head>
+<!-- Copyright 2010, Sylvain.Soliman@gmail.com
+Licensed under the BSD license
+http://www.opensource.org/licenses/bsd-license.php -->
+<script type="text/javascript">
+// Saves options to localStorage.
+function save_options() {
+   localStorage['user'] = document.getElementById('user').value;
+
+   localStorage['prefix'] = document.getElementById('prefix').value;
+
+   localStorage['copy'] = document.getElementById('copy').checked;
+
+   localStorage['num'] = document.getElementById('num').selectedIndex;
+
+   var domain = document.getElementById('domain');
+   localStorage['domain'] = domain.options[domain.selectedIndex].value;
+
+   localStorage['word'] = document.getElementById('site').checked;
+
+   // Update status to let user know options were saved.
+   document.getElementById('status').innerHTML = 'Options Saved';
+   setTimeout(
+      function() {
+         document.getElementById('status').innerHTML = '';
+      }, 1000);
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+   document.getElementById('user').value = localStorage['user'] || '';
+   document.getElementById('prefix').value = localStorage['prefix'] || '';
+   document.getElementById('num').selectedIndex =
+      parseInt(localStorage['num']) || 0;
+   var domain = document.getElementById('domain');
+   var i = domain.options.length - 1;
+   while (i >= 0 && domain.options[i].value != localStorage['domain'])
+      i--;
+   if (i < 0)
+      i = 0;
+   domain.selectedIndex = i;
+
+   if (localStorage['word'] !== 'false')
+      document.getElementById('site').checked = true;
+   else
+      document.getElementById('random').checked = true;
+
+   document.getElementById('copy').checked =
+      (localStorage['copy'] !== 'false');
+}
+</script>
+
+<body onload="restore_options()">
+   <h3>Spam Goormet Options</h3>
+   <div>
+      <p>
+      See spamgourmet's <a
+         href="http://spamgourmet.com/index.pl?nobrainer=1">no-brainer
+         mode</a>, <a
+         href="http://spamgourmet.com/index.pl?advanced=1">advanced mode</a>
+      and <a href="http://spamgourmet.com/index.pl?printpage=faq.html">FAQ</a>
+      for more details.
+      </p>
+      <form id="form" action="">
+         login: <input type="text" name="login" id="user"
+         onchange="save_options()" /><br />
+         prefix: <input type="text" name="prefix" id="prefix"
+         onchange="save_options()" />
+         <p>number of messages to forward
+         <select id="num" onchange="save_options()">
+            <option value="0">sg default</option>
+            <script>
+               for (var i = 1; i < 21 ; i++) {
+                  document.write('<option value="' + i + '">' + i +
+                     '</option>\n');
+                  }
+            </script>
+         </select></p>
+         <p>domain to use
+         <select id="domain" onchange="save_options()">
+            <option value="spamgourmet.com">spamgourmet.com</option>
+            <option value="spamgourmet.net">spamgourmet.net</option>
+            <option value="spamgourmet.org">spamgourmet.org</option>
+            <option value="spamcannon.net">spamcannon.net</option>
+            <option value="antichef.com">antichef.com</option>
+            <option value="antichef.net">antichef.net</option>
+            <option value="neverbox.com">neverbox.com</option>
+            <option value="recursor.net">recursor.net</option>
+            <option value="dfgh.net">dfgh.net</option>
+            <option value="spameater.org">spameater.org</option>
+            <option value="xoxy.net">xoxy.net</option>
+         </select>
+         </p>
+         <p>'someword' generator:<br />
+         <input type="radio" name="word" id="site" value="site"
+            onclick="save_options()"> site.comain.tld</input><br />
+         <input type="radio" name="word" id="random" value="random"
+            onclick="save_options()"> random letters</input>
+         </p>
+         <input type="checkbox" id="copy" onchange="save_options()" />
+         Copy the generated email address to clipboard
+      </form>
+      <p id="status">
+      </p>
+   </div>
+</body>
+</html>
