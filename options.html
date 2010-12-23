@@ -26,14 +26,17 @@ http://www.opensource.org/licenses/bsd-license.php -->
       font-weight: bold;
       font-size: larger;
       width: 180px;
-      margin: 0px auto;
       text-align: center;
-      opacity: 0;
-      -webkit-transition: opacity 0.5s linear;
+      position: absolute;
+      left: -200px;
+      -webkit-transition: left 0.5s ease-in-out;
+      -webkit-transform: rotate(270deg);
    }
 </style>
 
 <script type="text/javascript">
+//      margin: 0px auto;
+//      opacity: 0;
 // Saves options to localStorage.
 function save_options() {
    localStorage['user'] = document.getElementById('user').value;
@@ -56,11 +59,11 @@ function save_options() {
 
    // Update status to let user know options were saved.
    var stat = document.getElementById('status');
-   stat.style.opacity = 1;
+   stat.style.left = -80;
    setTimeout(
       function() {
-         stat.style.opacity = 0;
-      }, 1500);
+         stat.style.left = -200;
+      }, 2000);
 }
 
 // Restores select box state to saved value from localStorage.
@@ -156,16 +159,16 @@ function restore_options() {
             </div>
          </div>
          <br />
+         <div id="status">
+            <p>
+               Options Saved
+            </p>
+         </div>
          <div>
             <input type="checkbox" id="copy" onchange="save_options()" />
             Copy the generated email address to clipboard
          </div>
       </form>
-      <div id="status">
-         <p>
-            <br /> Options Saved <br /><br />
-         </p>
-      </div>
    </div>
 </body>
 </html>
