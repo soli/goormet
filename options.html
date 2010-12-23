@@ -3,6 +3,36 @@
 <!-- Copyright 2010, Sylvain.Soliman@gmail.com
 Licensed under the BSD license
 http://www.opensource.org/licenses/bsd-license.php -->
+<style type="text/css">
+   body {
+      font-family: verdana,arial,helvetica,sans-serif;
+      font-size: 10pt;
+      background-color: #ffffcc;
+      margin: 30px;
+   }
+   div {
+      margin: 15px;
+   }
+   div.framed {
+      border-style: dashed;
+      border-width: 1px;
+      border-radius: 5px;
+      padding: 10px;
+      display: inline-block;
+   }
+   #status {
+      background-color: #993366;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: larger;
+      width: 180px;
+      margin: 0px auto;
+      text-align: center;
+      opacity: 0;
+      -webkit-transition: opacity 0.5s linear;
+   }
+</style>
+
 <script type="text/javascript">
 // Saves options to localStorage.
 function save_options() {
@@ -25,16 +55,19 @@ function save_options() {
    }
 
    // Update status to let user know options were saved.
-   document.getElementById('status').innerHTML = 'Options Saved';
+   var stat = document.getElementById('status');
+   stat.style.opacity = 1;
    setTimeout(
       function() {
-         document.getElementById('status').innerHTML = '';
-      }, 1000);
+         stat.style.opacity = 0;
+      }, 1500);
 }
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-   document.getElementById('user').value = localStorage['user'] || '';
+   var user = document.getElementById('user');
+   user.value = localStorage['user'] || '';
+   user.focus();
    document.getElementById('prefix').value = localStorage['prefix'] || '';
    document.getElementById('num').selectedIndex =
       parseInt(localStorage['num']) || 0;
@@ -74,50 +107,65 @@ function restore_options() {
       for more details.
       </p>
       <form id="form" action="">
-         login: <input type="text" name="login" id="user"
-         onchange="save_options()" /><br />
-         prefix: <input type="text" name="prefix" id="prefix"
-         onchange="save_options()" />
-         <p>number of messages to forward
-         <select id="num" onchange="save_options()">
-            <option value="0">sg default</option>
-            <script>
-               for (var i = 1; i < 21 ; i++) {
-                  document.write('<option value="' + i + '">' + i +
-                     '</option>\n');
-                  }
-            </script>
-         </select></p>
-         <p>domain to use
-         <select id="domain" onchange="save_options()">
-            <option value="spamgourmet.com">spamgourmet.com</option>
-            <option value="spamgourmet.net">spamgourmet.net</option>
-            <option value="spamgourmet.org">spamgourmet.org</option>
-            <option value="spamcannon.net">spamcannon.net</option>
-            <option value="antichef.com">antichef.com</option>
-            <option value="antichef.net">antichef.net</option>
-            <option value="neverbox.com">neverbox.com</option>
-            <option value="recursor.net">recursor.net</option>
-            <option value="dfgh.net">dfgh.net</option>
-            <option value="spameater.org">spameater.org</option>
-            <option value="xoxy.net">xoxy.net</option>
-         </select>
-         </p>
-         <p>'someword' generator:<br />
-         <input type="radio" name="word" id="site" value="site"
-            onclick="save_options()"> sitedomaintld</input><br />
-         <input type="radio" name="word" id="domain" value="domain"
-            onclick="save_options()"> domain</input><br />
-         <input type="radio" name="word" id="random" value="random"
-            onclick="save_options()"> random letters</input><br />
-         <input type="radio" name="word" id="aword" value="aword"
-            onclick="save_options()"> a random word</input>
-         </p>
-         <input type="checkbox" id="copy" onchange="save_options()" />
-         Copy the generated email address to clipboard
+         <div>
+            user: <input type="text" name="login" id="user"
+            onchange="save_options()" />
+         </div>
+         <div class="framed">
+            <div style="float:left">
+               prefix: <input type="text" name="prefix" id="prefix"
+               onchange="save_options()" />
+               <p>number of messages to forward
+               <select id="num" onchange="save_options()">
+                  <option value="0">sg default</option>
+                  <script>
+                     for (var i = 1; i < 21 ; i++) {
+                        document.write('<option value="' + i + '">' + i +
+                           '</option>\n');
+                        }
+                  </script>
+               </select></p>
+               <p>domain to use
+               <select id="domain" onchange="save_options()">
+                  <option value="spamgourmet.com">spamgourmet.com</option>
+                  <option value="spamgourmet.net">spamgourmet.net</option>
+                  <option value="spamgourmet.org">spamgourmet.org</option>
+                  <option value="spamcannon.net">spamcannon.net</option>
+                  <option value="antichef.com">antichef.com</option>
+                  <option value="antichef.net">antichef.net</option>
+                  <option value="neverbox.com">neverbox.com</option>
+                  <option value="recursor.net">recursor.net</option>
+                  <option value="dfgh.net">dfgh.net</option>
+                  <option value="spameater.org">spameater.org</option>
+                  <option value="xoxy.net">xoxy.net</option>
+               </select>
+               </p>
+            </div>
+            <div style="float:left">
+               'someword' generator:
+               <p>
+               <input type="radio" name="word" id="site" value="site"
+                  onclick="save_options()"> sitedomaintld</input><br />
+               <input type="radio" name="word" id="domain" value="domain"
+                  onclick="save_options()"> domain</input><br />
+               <input type="radio" name="word" id="random" value="random"
+                  onclick="save_options()"> random letters</input><br />
+               <input type="radio" name="word" id="aword" value="aword"
+                  onclick="save_options()"> a random word</input>
+               </p>
+            </div>
+         </div>
+         <br />
+         <div>
+            <input type="checkbox" id="copy" onchange="save_options()" />
+            Copy the generated email address to clipboard
+         </div>
       </form>
-      <p id="status">
-      </p>
+      <div id="status">
+         <p>
+            <br /> Options Saved <br /><br />
+         </p>
+      </div>
    </div>
 </body>
 </html>
