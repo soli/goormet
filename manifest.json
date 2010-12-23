@@ -17,5 +17,6 @@
       "http://*/*",
       "https://*/*"
    ],
-   "options_page": "options.html"
+   "options_page": "options.html",
+   "__words_data": "words.js"
 }
