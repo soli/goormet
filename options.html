@@ -17,7 +17,12 @@ function save_options() {
    var domain = document.getElementById('domain');
    localStorage['domain'] = domain.options[domain.selectedIndex].value;
 
-   localStorage['word'] = document.getElementById('site').checked;
+   var words = document.getElementById('form').word;
+   for (var i=words.length-1 ; i >= 0 ; i--) {
+      if (words[i].checked) {
+         localStorage['word'] = words[i].value;
+      }
+   }
 
    // Update status to let user know options were saved.
    document.getElementById('status').innerHTML = 'Options Saved';
@@ -41,10 +46,15 @@ function restore_options() {
       i = 0;
    domain.selectedIndex = i;
 
-   if (localStorage['word'] !== 'false')
-      document.getElementById('site').checked = true;
-   else
-      document.getElementById('random').checked = true;
+   var words = document.getElementById('form').word;
+   if (localStorage['word'] == undefined) {
+      localStorage['word'] = 'site';
+   }
+   for (var i=words.length-1 ; i >= 0 ; i--) {
+      if (localStorage['word'] == words[i].value) {
+         words[i].checked = 1;
+      }
+   }
 
    document.getElementById('copy').checked =
       (localStorage['copy'] !== 'false');
@@ -95,7 +105,9 @@ function restore_options() {
          </p>
          <p>'someword' generator:<br />
          <input type="radio" name="word" id="site" value="site"
-            onclick="save_options()"> site.comain.tld</input><br />
+            onclick="save_options()"> sitedomaintld</input><br />
+         <input type="radio" name="word" id="domain" value="domain"
+            onclick="save_options()"> domain</input><br />
          <input type="radio" name="word" id="random" value="random"
             onclick="save_options()"> random letters</input>
          </p>
