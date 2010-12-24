@@ -4,3 +4,4 @@ syntax: glob
 *.crx
 updates.xml
 gourmet*.png
+goormet/
