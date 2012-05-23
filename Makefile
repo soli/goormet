@@ -5,7 +5,8 @@ VERSION = $(shell $(SED) -n -e 's/^.*"version": *"\(.*\)".*$$/\1/p' manifest.jso
 goormet.zip: goormet*.png manifest.json *.html
 	rm -Rf goormet
 	mkdir goormet
-	cp manifest.json $$($(SED) -n -e 's/.*: [[ ]*"\([^ ]*\.\(png\|html\|js\)\)".*$$/\1/p' manifest.json) goormet
+	cp $$($(SED) -n -e 's/.*: [[ ]*"\([^ ]*\.\(png\|html\|js\)\)".*$$/\1/p' manifest.json) goormet
+	grep -v '// ' manifest.json > goormet/manifest.json
 	zip $@ goormet/*
 
 goormet.crx: goormet.zip
