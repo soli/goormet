@@ -13,6 +13,7 @@
       "page": "background.html"
    },
    "permissions": [
+      "clipboardWrite",
       "contextMenus",
       "tabs",
       "http://*/*",

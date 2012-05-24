@@ -72,7 +72,7 @@
                var selection = window.getSelection();
                selection.removeAllRanges();
                selection.addRange(range);
-               document.execCommand('Copy', false, '');
+               document.execCommand('copy', false, '');
             }
             chrome.tabs.executeScript(
                null,
