@@ -34,70 +34,9 @@ http://www.opensource.org/licenses/bsd-license.php -->
    }
 </style>
 
-<script type="text/javascript">
-//      margin: 0px auto;
-//      opacity: 0;
-// Saves options to localStorage.
-function save_options() {
-   localStorage['user'] = document.getElementById('user').value;
+<script type="text/javascript" src="options.js"></script>
 
-   localStorage['prefix'] = document.getElementById('prefix').value;
-
-   localStorage['copy'] = document.getElementById('copy').checked;
-
-   localStorage['num'] = document.getElementById('num').selectedIndex;
-
-   var domain = document.getElementById('domain');
-   localStorage['domain'] = domain.options[domain.selectedIndex].value;
-
-   var words = document.getElementById('form').word;
-   for (var i=words.length-1 ; i >= 0 ; i--) {
-      if (words[i].checked) {
-         localStorage['word'] = words[i].value;
-      }
-   }
-
-   // Update status to let user know options were saved.
-   var stat = document.getElementById('status');
-   stat.style.left = -80;
-   setTimeout(
-      function() {
-         stat.style.left = -200;
-      }, 2000);
-}
-
-// Restores select box state to saved value from localStorage.
-function restore_options() {
-   var user = document.getElementById('user');
-   user.value = localStorage['user'] || '';
-   user.focus();
-   document.getElementById('prefix').value = localStorage['prefix'] || '';
-   document.getElementById('num').selectedIndex =
-      parseInt(localStorage['num']) || 0;
-   var domain = document.getElementById('domain');
-   var i = domain.options.length - 1;
-   while (i >= 0 && domain.options[i].value != localStorage['domain'])
-      i--;
-   if (i < 0)
-      i = 0;
-   domain.selectedIndex = i;
-
-   var words = document.getElementById('form').word;
-   if (localStorage['word'] == undefined) {
-      localStorage['word'] = 'site';
-   }
-   for (var i=words.length-1 ; i >= 0 ; i--) {
-      if (localStorage['word'] == words[i].value) {
-         words[i].checked = 1;
-      }
-   }
-
-   document.getElementById('copy').checked =
-      (localStorage['copy'] !== 'false');
-}
-</script>
-
-<body onload="restore_options()">
+<body>
    <h3>Spam Goormet Options</h3>
    <div>
       <p>
@@ -111,25 +50,44 @@ function restore_options() {
       </p>
       <form id="form" action="">
          <div>
-            user: <input type="text" name="login" id="user"
-            onchange="save_options()" />
+            user: <input type="text" name="login" id="user" />
          </div>
          <div class="framed">
             <div style="float:left">
-               prefix: <input type="text" name="prefix" id="prefix"
-               onchange="save_options()" />
+               prefix: <input type="text" name="prefix" id="prefix">
                <p>number of messages to forward
-               <select id="num" onchange="save_options()">
+               <select id="num">
                   <option value="0">sg default</option>
-                  <script>
-                     for (var i = 1; i < 21 ; i++) {
-                        document.write('<option value="' + i + '">' + i +
-                           '</option>\n');
-                        }
-                  </script>
+                  <!-- <script> -->
+                  <!--    for (var i = 1; i < 21 ; i++) { -->
+                  <!--       document.write('<option value="' + i + '">' + i + -->
+                  <!--          '</option>\n'); -->
+                  <!--       } -->
+                  <!-- </script> -->
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
                </select></p>
                <p>domain to use
-               <select id="domain" onchange="save_options()">
+               <select id="domain">
                   <option value="spamgourmet.com">spamgourmet.com</option>
                   <option value="spamgourmet.net">spamgourmet.net</option>
                   <option value="spamgourmet.org">spamgourmet.org</option>
@@ -147,14 +105,10 @@ function restore_options() {
             <div style="float:left">
                'someword' generator:
                <p>
-               <input type="radio" name="word" id="site" value="site"
-                  onclick="save_options()"> sitedomaintld</input><br />
-               <input type="radio" name="word" id="domain" value="domain"
-                  onclick="save_options()"> domain</input><br />
-               <input type="radio" name="word" id="random" value="random"
-                  onclick="save_options()"> random letters</input><br />
-               <input type="radio" name="word" id="aword" value="aword"
-                  onclick="save_options()"> a random word</input>
+               <input type="radio" name="word" id="site" value="site"> sitedomaintld</input><br />
+               <input type="radio" name="word" id="dom" value="domain"> domain</input><br />
+               <input type="radio" name="word" id="random" value="random"> random letters</input><br />
+               <input type="radio" name="word" id="aword" value="aword"> a random word</input>
                </p>
             </div>
          </div>
@@ -165,7 +119,7 @@ function restore_options() {
             </p>
          </div>
          <div>
-            <input type="checkbox" id="copy" onchange="save_options()" />
+            <input type="checkbox" id="copy" />
             Copy the generated email address to clipboard
          </div>
       </form>
