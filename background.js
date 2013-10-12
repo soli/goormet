@@ -48,8 +48,7 @@ function doSG(info, tab) {
          word = words[Math.floor(Math.random()*words.length)];
          break;
       default:
-         //word = site[site.length - 2];
-         word = site.join('-').replace(/^(www-)?(.*?)(-[A-z0-9]{2,3})?(-[A-z0-9]{2,3})$/ig,'$2');
+         word = site.join('-').replace(/^(www-)?(.*?)(-[A-z0-9]{2,3})?(-[A-z0-9]*)$/ig,'$2');
    }
    var email = prefix + word +
       "." + num + user + '@' + domain;
